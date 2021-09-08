@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .router-outlet-content {
+    @apply flex flex-col flex-auto overflow-y-auto;
+  }
+}
+
+@layer base {
+  router-outlet + * {
+    @apply router-outlet-content;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    @apply w-3;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-perfectDark;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-800;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-coolGray-600;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-coolGray-700;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+}
