@@ -6,6 +6,18 @@
   .router-outlet-content {
     @apply flex flex-col flex-auto overflow-y-auto;
   }
+
+  .btn {
+    @apply px-4 py-2 font-semibold rounded-full shadow-md focus:outline-none;
+  }
+
+  .btn-indigo {
+    @apply bg-indigo-600 text-white hover:bg-indigo-700;
+  }
+
+  .btn-green {
+    @apply bg-green-600 text-white hover:bg-green-700;
+  }
 }
 
 @layer base {
@@ -35,6 +47,21 @@
 
   ::-webkit-scrollbar-thumb:active {
     @apply bg-coolGray-700;
+  }
+
+  table tr th:first-child,
+  table tr td:first-child {
+    @apply rounded-l-2xl;
+  }
+
+  table tr th:last-child,
+  table tr td:last-child {
+    @apply rounded-r-2xl;
+  }
+
+  table tr th,
+  table tr td {
+    @apply py-4 px-2;
   }
 
   html,
