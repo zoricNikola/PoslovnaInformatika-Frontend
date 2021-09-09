@@ -1,0 +1,49 @@
+<nav>
+    <div
+    class="
+      container
+      px-6
+      h-16
+      flex
+      justify-between
+      items-center
+      lg:items-stretch
+      mx-auto
+    ">
+    <div class="mr-10 flex items-center">
+        <img
+          class="object-contain h-14 rounded-full"
+          src="./../../assets/central_bank.png"
+          aria-label="Home"
+          id="logo"
+        />
+        <h3
+          class="
+            text-base text-white
+            font-bold
+            tracking-normal
+            leading-tight
+            ml-3
+            hidden
+            lg:block
+          "
+        >
+          {{ appName }}
+        </h3>
+    </div>
+
+    <ul class="xl:flex items-center h-full">
+      <a
+      [routerLink]=""
+      class="router-link">
+      <span class="mr-2"></span>Izvestaji
+      </a>
+
+      <a
+      [routerLink]=""
+      class="router-link">
+      <span class="mr-2"></span>Klijenti
+      </a>
+    </ul>
+</div>
+</nav>
