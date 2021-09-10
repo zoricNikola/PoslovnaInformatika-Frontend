@@ -18,6 +18,63 @@
   .btn-green {
     @apply bg-green-600 text-white hover:bg-green-700;
   }
+
+  .btn-sm-blue {
+    @apply px-2
+          py-1
+          font-semibold
+          rounded-lg
+          shadow-md
+          focus:outline-none
+          bg-blue-700
+          text-white
+          hover:bg-blue-800
+  }
+
+  .btn-sm-red {
+    @apply px-2
+          py-1
+          font-semibold
+          rounded-lg
+          shadow-md
+          focus:outline-none
+          bg-red-700
+          text-white
+          hover:bg-red-800
+  }
+
+  .input-underlined {
+    @apply h-10
+    px-2
+    w-full
+    text-white
+    bg-indigo-900
+    rounded-lg
+    border-0 border-b-2
+    focus:border-orange-500
+    focus:ring-0
+    focus:outline-none
+    shadow-md;
+  }
+
+  .input-underlined.ng-touched.ng-invalid {
+    @apply border-red-500;
+  }
+
+  .input-underlined.ng-valid {
+    @apply border-green-500;
+  }
+
+  .input-error-holder {
+    @apply flex
+    px-2
+    h-auto
+    items-center
+    rounded-b-lg
+    text-opacity-50
+    bg-red-800 bg-opacity-50;
+  }
+
 }
 
 @layer base {

@@ -1,0 +1,115 @@
+<app-dialog [opened]="opened" [modal]="true">
+    <ng-container class="heading">
+        Registracija nove poslovne banke
+    </ng-container>
+
+    <ng-container class="content">
+        <form #f="ngForm" (ngSubmit)="submit()">
+            <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+                <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+                    <input
+                        required
+                        id="sifraBanke"
+                        name="sifraBanke"
+                        type="number"
+                        size="3"
+                        placeholder="Sifra banke"
+                        class="input-underlined text-center font-extrabold w-full"
+                        [(ngModel)]="poslovnaBanka.sifraBanke"
+                        #name="ngModel"/>
+                        <div
+                            *ngIf="name.touched && name.invalid"
+                            class="input-error-holder">
+                            <div class="flex-col space-y-2">
+                                <div *ngIf="name.errors?.required">
+                                Sifru poslovne banke je potrebno uneti
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+                <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+                    <input
+                        required
+                        id="nazivBanke"
+                        name="nazivBanke"
+                        type="text"
+                        placeholder="Naziv"
+                        class="input-underlined text-center font-extrabold w-full"
+                        [(ngModel)]="poslovnaBanka.nazivBanke"
+                        #name="ngModel"/>
+                        <div
+                            *ngIf="name.touched && name.invalid"
+                            class="input-error-holder">
+                            <div class="flex-col space-y-2">
+                                <div *ngIf="name.errors?.required">
+                                Naziv poslovne banke je potrebno uneti
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+                <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+                    <input
+                        required
+                        id="swiftKod"
+                        name="swiftKod"
+                        type="text"
+                        maxlength="8"
+                        placeholder="SWIFT kod banke"
+                        class="input-underlined text-center font-extrabold w-full"
+                        [(ngModel)]="poslovnaBanka.swiftKod"
+                        #name="ngModel"/>
+                        <div
+                            *ngIf="name.touched && name.invalid"
+                            class="input-error-holder">
+                            <div class="flex-col space-y-2">
+                                <div *ngIf="name.errors?.required">
+                                SWIFT kod poslovne banke je potrebno uneti
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+                <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+                    <input
+                        required
+                        id="brojObracunskogRacuna"
+                        name="obracunskiRacun"
+                        type="text"
+                        maxlength="18"
+                        placeholder="Broj obracunskog racuna"
+                        class="input-underlined text-center font-extrabold w-full"
+                        [(ngModel)]="poslovnaBanka.obracunskiRacun.brojObracunskogRacuna"
+                        #name="ngModel"/>
+                        <div
+                            *ngIf="name.touched && name.invalid"
+                            class="input-error-holder">
+                            <div class="flex-col space-y-2">
+                                <div *ngIf="name.errors?.required">
+                                Broj obracunskog racuna je potrebno uneti
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <button hidden></button>
+        </form>
+    </ng-container>
+
+    <ng-container class="footer">
+        <div class="inline-flex w-full justify-end space-x-2">
+          <button class="btn-sm-red" (click)="options.cancel()">Otkazi</button>
+          <button
+            [disabled]="f.invalid"
+            class="btn-sm-blue disabled:bg-gray-600 disabled:opacity-50"
+            (click)="f.onSubmit($event)">Sacuvaj</button>
+        </div>
+    </ng-container>
+</app-dialog>

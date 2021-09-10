@@ -1,7 +1,15 @@
 <div class="flex flex-col flex-auto justify-center items-center" >
     <div class="lg:w-3/4 bg-indigo-800 h-full p-4 my-10">
         <div class="w-full">
-            <button class="btn btn-green inline-flex items-center mt-5">
+
+            <app-poslovna-banka-form-dialog
+            [opened]="poslovnaBankaFormDialogOpened"
+            [options]="poslovnaBankaFormDialogOptions">
+            </app-poslovna-banka-form-dialog>
+
+            <button 
+            (click)="dodajPoslovnuBanku()"
+            class="btn btn-green inline-flex items-center mt-5">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
