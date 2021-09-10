@@ -29,16 +29,15 @@
                     <tr class="bg-red-300 text-indigo-800 shadow-md">
                         <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Naziv</th>
                         <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">SWIFT kod</th>
-                        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Adresa</th>
                         <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Obracunski racun</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="hover:bg-indigo-600 text-white shadow-md">
-                        <td>Komercijalna</td>
-                        <td>1234</td>
-                        <td>Adresaa</td>
-                        <td>234567</td>
+                    <tr *ngFor="let banka of poslovneBanke" 
+                        class="hover:bg-indigo-600 text-white shadow-md">
+                        <td>{{ banka.nazivBanke }}</td>
+                        <td>{{ banka.swiftKod }}</td>
+                        <td>{{ banka.obracunskiRacun.brojObracunskogRacuna }}</td>
                     </tr>
                 </tbody>
             </table>
