@@ -7,7 +7,7 @@
             [options]="poslovnaBankaFormDialogOptions">
             </app-poslovna-banka-form-dialog>
 
-            <button 
+            <button
             (click)="dodajPoslovnuBanku()"
             class="btn btn-green inline-flex items-center mt-5">
                 <svg
@@ -41,9 +41,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let banka of poslovneBanke" 
+                    <tr *ngFor="let banka of poslovneBanke"
                         class="hover:bg-indigo-600 text-white shadow-md">
-                        <td>{{ banka.nazivBanke }}</td>
+                        <td>
+                          <a routerLink="/{{banka.sifraBanke}}"
+                            class="router-link">
+                            {{ banka.nazivBanke }}
+                          </a>
+                        </td>
                         <td>{{ banka.swiftKod }}</td>
                         <td>{{ banka.obracunskiRacun.brojObracunskogRacuna }}</td>
                     </tr>
