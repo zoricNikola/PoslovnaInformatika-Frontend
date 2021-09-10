@@ -25,6 +25,27 @@
             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg> Dodaj
       </button>
+      <button
+        *ngIf="selectable && selectedKlijent"
+        (click)="onKlijentTake()"
+        class="btn btn-green float-right inline-flex items-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+          />
+        </svg>
+        Take
+      </button>
       <table
         class="
                 w-full
@@ -49,7 +70,15 @@
         </thead>
         <tbody>
         <tr *ngFor="let klijent of sviKlijenti"
-            class="hover:bg-indigo-600 text-white shadow-md">
+            class="hover:bg-indigo-600 text-white shadow-md"
+            class="hover:bg-indigo-600 text-white shadow-md"
+            [class.cursor-pointer]="selectable"
+            [ngClass]="
+              selectable && selectedKlijent === klijent
+                ? 'bg-indigo-700'
+                : 'bg-indigo-900'
+            "
+            (click)="selectable && onKlijentSelect(klijent)">
           <td>{{ klijent.ime }}</td>
           <td>{{ klijent.prezime }}</td>
           <td>{{ klijent.naziv }}</td>

@@ -1,0 +1,113 @@
+<app-dialog [opened]="opened" [modal]="true">
+  <ng-container class="heading">{{
+    options.state === FORM_STATE.ADD
+      ? "Kreirajte novi tekuci racun"
+      : ""
+    }}</ng-container>
+  <ng-container class="content">
+    <klijent-form-dialog
+    [opened]="klijentFormDialogOpened"
+    [options]="klijentFormDialogOptions">
+    </klijent-form-dialog>
+    <form #f="ngForm" (ngSubmit)="f.valid && submit()">
+      <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+        <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+
+          <div
+            class="custom-input-holder w-full"
+            *ngIf="poslovneBanke | async as svePoslovneBanke"
+          >
+            <select
+              required
+              id="poslovnaBanka"
+              name="poslovnBanka"
+              class="input-underlined form-select block"
+              [(ngModel)]="tekuciRacun.poslovnaBanka"
+              #poslovnaBanka="ngModel"
+            >
+              <option
+                *ngIf="tekuciRacun?.poslovnaBanka?.sifraBanke"
+                [ngValue]="tekuciRacun.poslovnaBanka"
+              >
+                {{ tekuciRacun.poslovnaBanka.nazivBanke }}
+              </option>
+              <ng-container *ngFor="let title of svePoslovneBanke">
+                <option
+                  *ngIf="title.sifraBanke !== tekuciRacun?.poslovnaBanka?.sifraBanke"
+                  [ngValue]="title"
+                >
+                  {{ title.nazivBanke }}
+                </option>
+              </ng-container>
+            </select>
+            <label for="poslovnaBanka">Poslovna banka</label>
+            <div
+              *ngIf="poslovnaBanka.touched && poslovnaBanka.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="poslovnaBanka.errors?.required">
+                  Poslovnu banku je neophodno izabrati
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-input-holder w-full">
+            <button
+              class="btn btn-green inline-flex items-center mt-5"
+              (click)="onPostojeciKlijentClick()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg> Izaberite klijenta
+            </button>
+          </div>
+
+          <div class="custom-input-holder w-full">
+            <a
+              class="btn btn-green inline-flex items-center mt-5"
+              (click)="onNewKlijentClick()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg> Kreirajte novog klijenta
+            </a>
+          </div>
+
+
+        </div>
+      </div>
+      <button hidden></button>
+    </form>
+  </ng-container>
+  <ng-container class="footer">
+    <div class="inline-flex w-full justify-end space-x-2">
+      <button class="btn-sm-red" (click)="options.cancel()">Cancel</button>
+      <button
+        [disabled]="f.invalid"
+        class="btn-sm-blue disabled:bg-gray-600 disabled:opacity-50"
+        (click)="f.onSubmit($event)"
+      >
+        Save
+      </button>
+    </div>
+  </ng-container>
+</app-dialog>
+

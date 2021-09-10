@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,8 @@ import { DialogComponent } from './common/dialog/dialog.component';
 import { PoslovnaBankaFormDialogComponent } from './components/poslovne-banke/poslovna-banka-form-dialog/poslovna-banka-form-dialog.component';
 import {KlijentComponent} from "./components/klijent/klijent.component";
 import {KlijentFormDialogComponent} from "./components/klijent/klijent-form-dialog/klijent-form-dialog.component";
+import { TekuciRacunComponent } from './components/tekuci-racun/tekuci-racun.component';
+import { TekuciRacunFormDialogComponent } from './components/tekuci-racun/tekuci-racun-form-dialog/tekuci-racun-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {KlijentFormDialogComponent} from "./components/klijent/klijent-form-dial
     DialogComponent,
     PoslovnaBankaFormDialogComponent,
     KlijentComponent,
-    KlijentFormDialogComponent
+    KlijentFormDialogComponent,
+    TekuciRacunComponent,
+    TekuciRacunFormDialogComponent
   ],
   imports: [
     BrowserModule,

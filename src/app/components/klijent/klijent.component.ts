@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {Klijent} from "../../model/klijent";
 import {KlijentService} from "../../service/klijent.service";
@@ -13,6 +13,10 @@ import {KlijentFormDialogOptions} from "./klijent-form-dialog/klijent-form-dialo
   styleUrls: ['./klijent.component.css']
 })
 export class KlijentComponent implements OnInit {
+  @Input('selectable') selectable = false;
+  @Output('itemTake') klijentTake: EventEmitter<Klijent> = new EventEmitter<Klijent>();
+
+  selectedKlijent: Klijent | undefined = undefined;
 
   klijenti: Observable<Klijent []> = of();
 
@@ -36,6 +40,17 @@ export class KlijentComponent implements OnInit {
 
   ngOnInit(): void {
     this.klijenti = this.klijentService.getAllKlijent();
+  }
+
+  onKlijentSelect(klijent: Klijent): void {
+    this.selectedKlijent = this.selectedKlijent === klijent ? undefined : klijent;
+  }
+
+  onKlijentTake(): void {
+    let klijent: Klijent = {...this.selectedKlijent as Klijent};
+    this.selectedKlijent = undefined;
+    this.klijentTake.emit(klijent);
+    console.log(klijent);
   }
 
   onNewKlijentClick(): void {
