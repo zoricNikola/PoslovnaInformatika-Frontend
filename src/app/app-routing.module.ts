@@ -6,8 +6,9 @@ import {TekuciRacunComponent} from "./components/tekuci-racun/tekuci-racun.compo
 import {PoslovnaBankaComponent} from "./components/poslovna-banka/poslovna-banka.component";
 
 const routes: Routes = [
-  { path: '', component: PoslovneBankeComponent },
-  { path: ':id', component: PoslovnaBankaComponent},
+  { path: '', redirectTo: 'poslovne-banke', pathMatch: 'full'},
+  { path: 'poslovne-banke', component: PoslovneBankeComponent },
+  { path: 'poslovne-banke/:id', component: PoslovnaBankaComponent},
   { path: 'klijent', component: KlijentComponent},
   { path: 'tekuci-racun', component: TekuciRacunComponent}
 ];
