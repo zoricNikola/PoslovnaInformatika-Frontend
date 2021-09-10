@@ -9,9 +9,53 @@
     [opened]="klijentFormDialogOpened"
     [options]="klijentFormDialogOptions">
     </klijent-form-dialog>
+
     <form #f="ngForm" (ngSubmit)="f.valid && submit()">
       <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
         <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+
+
+          <app-dialog [opened]="postojeciKlijentIzborOpened" [modal]="true">
+            <ng-container class="heading">{{
+              options.state === FORM_STATE.ADD
+                ? "Izaberite klijenta"
+                : ""
+              }}</ng-container>
+            <ng-container class="content">
+              <div klijent (itemTake)="onKlijentTaken($event)" [selectable]="true"></div>
+            </ng-container>
+            <ng-container class="footer">
+              <div class="inline-flex w-full justify-end space-x-2">
+                <a class="btn-sm-red" (click)="onPostojeciKlijentClick()">Cancel</a>
+              </div>
+            </ng-container>
+          </app-dialog>
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="brojRacuna"
+              name="brojRacuna"
+              type="number"
+              maxlength="18"
+              minlength="18"
+              placeholder="Broj racuna"
+              class="input-underlined"
+              [(ngModel)]="tekuciRacun.id"
+              #brojRacuna="ngModel"
+            />
+            <label for="brojRacuna">Broj racuna</label>
+            <div
+              *ngIf="brojRacuna.touched && brojRacuna.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="brojRacuna.errors?.required">
+                  Broj racuna je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div
             class="custom-input-holder w-full"
@@ -54,7 +98,7 @@
           </div>
 
           <div class="custom-input-holder w-full">
-            <button
+            <a
               class="btn btn-green inline-flex items-center mt-5"
               (click)="onPostojeciKlijentClick()">
               <svg
@@ -69,7 +113,7 @@
                   stroke-width="2"
                   d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg> Izaberite klijenta
-            </button>
+            </a>
           </div>
 
           <div class="custom-input-holder w-full">

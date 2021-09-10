@@ -29,15 +29,18 @@ export class TekuciRacunFormDialogComponent implements OnInit {
 
   poslovneBanke: Observable<PoslovnaBanka []> = of();
 
+  klijentIzabrani: Klijent | undefined = undefined;
+
   klijentFormDialogOpened: boolean = false;
   klijentFormDialogOptions: KlijentFormDialogOptions = {
     state: FORM_STATE.ADD,
     klijentForEdit: undefined,
     cancel: () => {},
-    save: (klijent: Klijent) => {},
+    save: (klijent: Klijent) => {}
   };
 
   tekuciRacun: TekuciRacun = {
+    id: '',
     poslovnaBanka: {
       nazivBanke: '',
       obracunskiRacun: {
@@ -83,16 +86,27 @@ export class TekuciRacunFormDialogComponent implements OnInit {
 
     if(this.form.valid){
       (document.activeElement as HTMLElement).blur();
+      if (this.klijentIzabrani) {
+        this.tekuciRacun.klijent = this.klijentIzabrani;
+      }
+      if(this.selectedKlijent){
+        this.tekuciRacun.klijent = this.selectedKlijent;
+      }
+      console.log(this.tekuciRacun);
       this.options.save(this.tekuciRacun);
     }
   }
 
-  bindKlijent(klijent: Klijent) {
-    this.tekuciRacun.klijent = klijent;
+  onPostojeciKlijentClick(){
+    this.postojeciKlijentIzborOpened = !this.postojeciKlijentIzborOpened;
+    console.log(this.selectedKlijent);
   }
 
-  onPostojeciKlijentClick(){
-
+  onKlijentTaken(klijent: Klijent): void{
+    this.selectedKlijent = klijent;
+    if(this.selectedKlijent){
+      this.tekuciRacun.klijent = this.selectedKlijent;
+    }
   }
 
   onNewKlijentClick(){
@@ -105,8 +119,7 @@ export class TekuciRacunFormDialogComponent implements OnInit {
         this.klijentFormDialogOpened = false;
       },
       save: (klijent: Klijent) => {
-        this.bindKlijent(klijent);
-        console.log(klijent);
+
         this.klijentFormDialogOpened = false;
       }
     };

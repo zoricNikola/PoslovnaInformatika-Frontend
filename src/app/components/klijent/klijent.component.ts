@@ -50,7 +50,6 @@ export class KlijentComponent implements OnInit {
     let klijent: Klijent = {...this.selectedKlijent as Klijent};
     this.selectedKlijent = undefined;
     this.klijentTake.emit(klijent);
-    console.log(klijent);
   }
 
   onNewKlijentClick(): void {

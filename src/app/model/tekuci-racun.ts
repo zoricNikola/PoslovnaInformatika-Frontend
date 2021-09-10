@@ -2,7 +2,7 @@ import {PoslovnaBanka} from "./poslovna-banka";
 import {Klijent} from "./klijent";
 
 export interface TekuciRacun {
-  id?: number,
+  id: string,
   poslovnaBanka: PoslovnaBanka,
   klijent: Klijent,
 }

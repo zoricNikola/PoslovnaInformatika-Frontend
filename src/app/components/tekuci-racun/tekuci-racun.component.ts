@@ -48,7 +48,7 @@ export class TekuciRacunComponent implements OnInit {
         this.confirmationDialogOpened = false;
       },
       confirm: () => {
-        this.tekuciRacunService.deleteTekuciRacun(tekuciRacun.id!)
+        this.tekuciRacunService.deleteTekuciRacun(parseInt(tekuciRacun.id!))
           .pipe(take(1))
           .subscribe(() => {
             this.confirmationDialogOpened = false;
@@ -67,6 +67,7 @@ export class TekuciRacunComponent implements OnInit {
         this.tekuciRacunFormDialogOpened = false;
       },
       save: (tekuciRacun: TekuciRacun) => {
+        console.dir(tekuciRacun);
         this.tekuciRacunService.createTekuciRacun(tekuciRacun)
           .pipe(take(1))
           .subscribe((id) => {
