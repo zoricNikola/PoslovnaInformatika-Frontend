@@ -40,7 +40,8 @@
       </a>
 
       <a
-      [routerLink]=""
+      routerLink="/klijent"
+      [ngClass]="{ 'active-router-link': isActive('/klijent') }"
       class="router-link">
       <span class="mr-4"></span>Klijenti
       </a>

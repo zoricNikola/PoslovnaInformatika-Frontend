@@ -1,0 +1,228 @@
+<app-dialog [opened]="opened" [modal]="true">
+  <ng-container class="heading">{{
+    options.state === FORM_STATE.ADD
+      ? "Dodajte novog klijenta"
+      : "Izmenite klijenta: " + originalKlijentName
+    }}</ng-container>
+  <ng-container class="content">
+    <form #f="ngForm" (ngSubmit)="f.valid && submit()">
+      <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
+        <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="ime"
+              name="ime"
+              type="text"
+              placeholder="Ime"
+              class="input-underlined"
+              [(ngModel)]="klijent.ime"
+              #ime="ngModel"
+            />
+            <label for="ime">Ime</label>
+            <div
+              *ngIf="ime.touched && ime.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="ime.errors?.required">
+                  Ime je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="prezime"
+              name="prezime"
+              type="text"
+              placeholder="Prezime"
+              class="input-underlined"
+              [(ngModel)]="klijent.prezime"
+              #prezime="ngModel"
+            />
+            <label for="prezime">Prezime</label>
+            <div
+              *ngIf="prezime.touched && prezime.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="prezime.errors?.required">
+                  Prezime je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="naziv"
+              name="naziv"
+              type="text"
+              placeholder="Naziv"
+              class="input-underlined"
+              [(ngModel)]="klijent.naziv"
+              #naziv="ngModel"
+            />
+            <label for="naziv">Naziv</label>
+            <div
+              *ngIf="naziv.touched && naziv.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="naziv.errors?.required">
+                  Naziv je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="adresa"
+              name="adresa"
+              type="text"
+              placeholder="Adresa"
+              class="input-underlined"
+              [(ngModel)]="klijent.adresa"
+              #adresa="ngModel"
+            />
+            <label for="adresa">Adresa</label>
+            <div
+              *ngIf="adresa.touched && adresa.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="adresa.errors?.required">
+                  Adresu je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-input-holder">
+            <input
+              required
+              id="pib"
+              name="pib"
+              type="number"
+              placeholder="PIB"
+              class="input-underlined"
+              [(ngModel)]="klijent.pib"
+              #pib="ngModel"
+            />
+            <label for="pib">PIB</label>
+            <div
+              *ngIf="pib.touched && pib.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="pib.errors?.required">
+                  PIB je neophodno uneti
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="custom-input-holder w-1/2"
+            *ngIf="mesta | async as svaMesta"
+          >
+            <select
+              required
+              id="mesto"
+              name="mesto"
+              class="input-underlined form-select block"
+              [(ngModel)]="klijent.mesto"
+              #mesto="ngModel"
+            >
+              <option
+                *ngIf="klijent?.mesto?.id"
+                [ngValue]="klijent.mesto"
+              >
+                {{ klijent.mesto.nazivMesta }}
+              </option>
+              <ng-container *ngFor="let title of svaMesta">
+                <option
+                  *ngIf="title.id !== klijent?.mesto?.id"
+                  [ngValue]="title"
+                >
+                  {{ title.nazivMesta }}
+                </option>
+              </ng-container>
+            </select>
+            <label for="mesto">Mesto</label>
+            <div
+              *ngIf="mesto.touched && mesto.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="mesto.errors?.required">
+                  Mesto je neophodno izabrati
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="custom-input-holder w-1/2"
+            *ngIf="delatnosti | async as sveDelatnosti"
+          >
+            <select
+              required
+              id="delatnost"
+              name="delatnost"
+              class="input-underlined form-select block"
+              [(ngModel)]="klijent.delatnost"
+              #delatnost="ngModel"
+            >
+              <option
+                *ngIf="klijent?.delatnost?.id"
+                [ngValue]="klijent.delatnost"
+              >
+                {{ klijent.delatnost.nazivDelatnosti }}
+              </option>
+              <ng-container *ngFor="let title of sveDelatnosti">
+                <option
+                  *ngIf="title.id !== klijent?.delatnost?.id"
+                  [ngValue]="title"
+                >
+                  {{ title.nazivDelatnosti }}
+                </option>
+              </ng-container>
+            </select>
+            <label for="delatnost">Delatnost</label>
+            <div
+              *ngIf="delatnost.touched && delatnost.invalid"
+              class="input-error-holder"
+            >
+              <div class="flex-col space-y-2">
+                <div *ngIf="delatnost.errors?.required">
+                  Delatnost je neophodno izabrati
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button hidden></button>
+    </form>
+  </ng-container>
+  <ng-container class="footer">
+    <div class="inline-flex w-full justify-end space-x-2">
+      <button class="btn-sm-red" (click)="options.cancel()">Cancel</button>
+      <button
+        [disabled]="f.invalid"
+        class="btn-sm-blue disabled:bg-gray-600 disabled:opacity-50"
+        (click)="f.onSubmit($event)"
+      >
+        Save
+      </button>
+    </div>
+  </ng-container>
+</app-dialog>

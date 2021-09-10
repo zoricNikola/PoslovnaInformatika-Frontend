@@ -15,6 +15,10 @@ export class KlijentService extends BaseService{
       super(`${environment.apiUrl}/klijenti`,http);
     }
 
+    getAllKlijent(): Observable<Klijent []>{
+      return this.getAll();
+    }
+
     getKlijent(id: number): Observable<Klijent> {
       return this.getOne(id).pipe(map((responseBody) => responseBody as Klijent));
     }

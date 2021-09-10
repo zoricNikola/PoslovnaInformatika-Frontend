@@ -12,6 +12,8 @@ import { AccordionComponent } from './common/accordion/accordion.component';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { DialogComponent } from './common/dialog/dialog.component';
 import { PoslovnaBankaFormDialogComponent } from './components/poslovne-banke/poslovna-banka-form-dialog/poslovna-banka-form-dialog.component';
+import {KlijentComponent} from "./components/klijent/klijent.component";
+import {KlijentFormDialogComponent} from "./components/klijent/klijent-form-dialog/klijent-form-dialog.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { PoslovnaBankaFormDialogComponent } from './components/poslovne-banke/po
     AccordionComponent,
     ConfirmationDialogComponent,
     DialogComponent,
-    PoslovnaBankaFormDialogComponent
+    PoslovnaBankaFormDialogComponent,
+    KlijentComponent,
+    KlijentFormDialogComponent
   ],
   imports: [
     BrowserModule,
