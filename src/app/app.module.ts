@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PoslovneBankeComponent } from './components/poslovne-banke/poslovne-banke.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AccordionComponent } from './common/accordion/accordion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PoslovneBankeComponent,
-    NavbarComponent
+    NavbarComponent,
+    AccordionComponent
   ],
   imports: [
     BrowserModule,
