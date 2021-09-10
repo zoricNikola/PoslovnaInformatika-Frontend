@@ -34,10 +34,12 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
     adresa: '',
     pib: 0,
     mesto: {
+      id: 0,
       postanskiBroj: 0,
       nazivMesta: '',
     },
     delatnost: {
+      id: 0,
       sifraDelatnosti: 0,
       nazivDelatnosti: '',
     }
@@ -76,10 +78,12 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
           adresa: '',
           pib: 0,
           mesto: {
+            id: 0,
             postanskiBroj: 0,
             nazivMesta: '',
           },
           delatnost: {
+            id:0,
             sifraDelatnosti: 0,
             nazivDelatnosti: '',
           }
