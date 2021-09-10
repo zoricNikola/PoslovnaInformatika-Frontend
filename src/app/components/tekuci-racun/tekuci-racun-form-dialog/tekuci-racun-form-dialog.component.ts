@@ -22,14 +22,13 @@ export interface TekuciRacunFormDialogOptions {
 })
 export class TekuciRacunFormDialogComponent implements OnInit {
   @Input('selectedKlijent') selectedKlijent: Klijent | undefined = undefined;
+  @Input('klijentIzabrani') klijentIzabrani: Klijent | undefined = undefined;
   @Input('selectable') selectable = true;
   @Input('options') options!: TekuciRacunFormDialogOptions;
   @Input('opened') opened = false;
   @ViewChild('f') form!: NgForm;
 
   poslovneBanke: Observable<PoslovnaBanka []> = of();
-
-  klijentIzabrani: Klijent | undefined = undefined;
 
   klijentFormDialogOpened: boolean = false;
   klijentFormDialogOptions: KlijentFormDialogOptions = {
@@ -92,7 +91,6 @@ export class TekuciRacunFormDialogComponent implements OnInit {
       if(this.selectedKlijent){
         this.tekuciRacun.klijent = this.selectedKlijent;
       }
-      console.log(this.tekuciRacun);
       this.options.save(this.tekuciRacun);
     }
   }
@@ -109,6 +107,13 @@ export class TekuciRacunFormDialogComponent implements OnInit {
     }
   }
 
+  onKlijentCreated(klijent: Klijent): void{
+    this.klijentIzabrani = klijent;
+    if(this.klijentIzabrani){
+      this.tekuciRacun.klijent = this.klijentIzabrani;
+    }
+  }
+
   onNewKlijentClick(){
     this.klijentFormDialogOpened = true;
 
@@ -119,7 +124,7 @@ export class TekuciRacunFormDialogComponent implements OnInit {
         this.klijentFormDialogOpened = false;
       },
       save: (klijent: Klijent) => {
-
+        this.tekuciRacun.klijent = klijent;
         this.klijentFormDialogOpened = false;
       }
     };

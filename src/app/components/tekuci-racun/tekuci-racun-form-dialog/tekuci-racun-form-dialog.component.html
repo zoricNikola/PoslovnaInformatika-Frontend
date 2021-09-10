@@ -5,7 +5,7 @@
       : ""
     }}</ng-container>
   <ng-container class="content">
-    <klijent-form-dialog
+    <klijent-form-dialog (createdKlijent)="onKlijentCreated($event)"
     [opened]="klijentFormDialogOpened"
     [options]="klijentFormDialogOptions">
     </klijent-form-dialog>

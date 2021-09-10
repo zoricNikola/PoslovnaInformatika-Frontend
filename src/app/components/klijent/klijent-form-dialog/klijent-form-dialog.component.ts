@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {FORM_STATE} from "../../../model/common/form-state";
 import {Klijent} from "../../../model/klijent";
 import {NgForm} from "@angular/forms";
@@ -24,6 +24,7 @@ export interface KlijentFormDialogOptions {
 export class KlijentFormDialogComponent implements OnInit, OnChanges {
   @Input('opened') opened = false;
   @Input('options') options!: KlijentFormDialogOptions;
+  @Output('createdKlijent') createdKlijent: EventEmitter<Klijent> = new EventEmitter<Klijent>();
 
   @ViewChild('f') form!: NgForm;
 
@@ -89,7 +90,7 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
           }
         };
         this.originalKlijentName = '';
-      }, 300)
+      }, 3000)
     }
   }
 
@@ -107,7 +108,11 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
 
     if(this.form.valid){
       (document.activeElement as HTMLElement).blur();
-      this.options.save(this.klijent);
+      this.options.save({
+        ...this.klijent,
+        mesto: {...this.klijent.mesto},
+        delatnost: {...this.klijent.delatnost}
+      });
     }
   }
 
