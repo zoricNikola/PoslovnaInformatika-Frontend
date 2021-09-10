@@ -1,78 +1,87 @@
-<div class="flex flex-col flex-auto justify-center items-center"  *ngIf="tekuciRacuni | async as sviTekuciRacuni">
-  <div class="lg:w-3/4 bg-indigo-800 h-full p-4 my-10">
-    <div class="w-full">
-      <confirmation-dialog
-        [opened]="confirmationDialogOpened"
-        [options]="confirmationDialogOptions"
-      ></confirmation-dialog>
-      <app-tekuci-racun-form-dialog
-        [opened]="tekuciRacunFormDialogOpened"
-        [options]="tekuciRacunFormDialogOptions"
-      ></app-tekuci-racun-form-dialog>
-      <button
-        class="btn btn-green inline-flex items-center mt-5"
-        (click)="onNewTekuciRacunClick()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg> Dodaj
-      </button>
-      <table
-        class="
-                w-full
-                mt-5
-                table-fixed
-                text-center
-                border-separate
-                table-row-spacing-y-4
-                font-semibold">
-        <thead>
-        <tr class="bg-red-300 text-indigo-800 shadow-md">
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Poslovna banka</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Klijent</th>
-          <th class="w-16"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let tekuciRacun of sviTekuciRacuni"
-            class="hover:bg-indigo-600 text-white shadow-md">
-          <td>{{ tekuciRacun.poslovnaBanka.nazivBanke }}</td>
-          <td>{{ tekuciRacun.klijent.ime + ' ' +tekuciRacun.klijent.prezime}}</td>
-          <td class="w-16">
-            <button
-              title="Delete course"
-              class="btn-sm-red"
-              (click)="onTekuciRacunDelete(tekuciRacun)"
+<div *ngIf="tekuciRacuni | async as sviTekuciRacuni" class="w-full">
+  <confirmation-dialog
+    [opened]="confirmationDialogOpened"
+    [options]="confirmationDialogOptions"
+  ></confirmation-dialog>
+  <app-tekuci-racun-form-dialog
+    [sifraBanke]="sifraBanke"
+    [opened]="tekuciRacunFormDialogOpened"
+    [options]="tekuciRacunFormDialogOptions"
+  ></app-tekuci-racun-form-dialog>
+  <button
+    class="btn btn-green inline-flex items-center mt-5"
+    (click)="onNewTekuciRacunClick()"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    Dodaj
+  </button>
+  <table
+    class="
+      w-full
+      mt-5
+      table-fixed
+      text-center
+      border-separate
+      table-row-spacing-y-4
+      font-semibold
+    "
+  >
+    <thead>
+      <tr class="bg-red-300 text-indigo-800 shadow-md">
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Broj računa
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Klijent
+        </th>
+        <th class="w-16"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let tekuciRacun of sviTekuciRacuni"
+        class="hover:bg-indigo-600 text-white shadow-md"
+      >
+        <td>{{ tekuciRacun.brojRacuna }}</td>
+        <td>
+          {{ tekuciRacun.klijent.ime + " " + tekuciRacun.klijent.prezime }}
+        </td>
+        <td class="w-16">
+          <button
+            title="Delete course"
+            class="btn-sm-red"
+            (click)="onTekuciRacunDelete(tekuciRacun)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-

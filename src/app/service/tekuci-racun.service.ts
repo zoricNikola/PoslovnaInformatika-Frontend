@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import {BaseService} from "./base.service";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
-import {TekuciRacun} from "../model/tekuci-racun";
-import {catchError, map} from "rxjs/operators";
+import { BaseService } from './base.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { TekuciRacun } from '../model/tekuci-racun';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TekuciRacunService extends BaseService{
-
+export class TekuciRacunService extends BaseService {
   constructor(http: HttpClient) {
-    super(`${environment.apiUrl}/tekuci-racuni`,http);
+    super(`${environment.apiUrl}/tekuci-racuni`, http);
   }
 
-  getAllTekuciRacun(): Observable<TekuciRacun []>{
+  getAllTekuciRacun(): Observable<TekuciRacun[]> {
     return this.getAll();
   }
 
@@ -29,7 +28,12 @@ export class TekuciRacunService extends BaseService{
       .pipe(catchError(this.handleError));
   }
 
-  deleteTekuciRacun(id: number): Observable<void>{
-    return this.delete(id);
+  deleteTekuciRacun(brojRacuna: string): Observable<void> {
+    return this.http
+      .delete(`${this.url}/${brojRacuna}`, {
+        observe: 'response',
+      })
+      .pipe(map((response) => {}))
+      .pipe(catchError(this.handleError));
   }
 }

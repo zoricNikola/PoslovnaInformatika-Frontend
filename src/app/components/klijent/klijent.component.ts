@@ -1,24 +1,27 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {Klijent} from "../../model/klijent";
-import {KlijentService} from "../../service/klijent.service";
-import {FORM_STATE} from "../../model/common/form-state";
-import {ConfirmationDialogOptions} from "../../common/confirmation-dialog/confirmation-dialog.component";
-import {take} from "rxjs/operators";
-import {KlijentFormDialogOptions} from "./klijent-form-dialog/klijent-form-dialog.component";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Klijent } from '../../model/klijent';
+import { KlijentService } from '../../service/klijent.service';
+import { FORM_STATE } from '../../model/common/form-state';
+import { ConfirmationDialogOptions } from '../../common/confirmation-dialog/confirmation-dialog.component';
+import { take } from 'rxjs/operators';
+import { KlijentFormDialogOptions } from './klijent-form-dialog/klijent-form-dialog.component';
+import { PoslovnaBankaService } from 'src/app/service/poslovna-banka.service';
 
 @Component({
   selector: '[klijent]',
   templateUrl: './klijent.component.html',
-  styleUrls: ['./klijent.component.css']
+  styleUrls: ['./klijent.component.css'],
 })
 export class KlijentComponent implements OnInit {
   @Input('selectable') selectable = false;
-  @Output('itemTake') klijentTake: EventEmitter<Klijent> = new EventEmitter<Klijent>();
+  @Input('sifraBanke') sifraBanke!: number;
+  @Output('itemTake') klijentTake: EventEmitter<Klijent> =
+    new EventEmitter<Klijent>();
 
   selectedKlijent: Klijent | undefined = undefined;
 
-  klijenti: Observable<Klijent []> = of();
+  klijenti: Observable<Klijent[]> = of();
 
   klijentFormDialogOpened: boolean = false;
   klijentFormDialogOptions: KlijentFormDialogOptions = {
@@ -36,18 +39,26 @@ export class KlijentComponent implements OnInit {
     confirm: () => {},
   };
 
-  constructor(private klijentService: KlijentService) { }
+  constructor(
+    private klijentService: KlijentService,
+    private bankaService: PoslovnaBankaService
+  ) {}
+
+  fetchKlijenti(): void {
+    this.klijenti = this.bankaService.getPoslovnaBankaKlijenti(this.sifraBanke);
+  }
 
   ngOnInit(): void {
-    this.klijenti = this.klijentService.getAllKlijent();
+    this.fetchKlijenti();
   }
 
   onKlijentSelect(klijent: Klijent): void {
-    this.selectedKlijent = this.selectedKlijent === klijent ? undefined : klijent;
+    this.selectedKlijent =
+      this.selectedKlijent === klijent ? undefined : klijent;
   }
 
   onKlijentTake(): void {
-    let klijent: Klijent = {...this.selectedKlijent as Klijent};
+    let klijent: Klijent = { ...(this.selectedKlijent as Klijent) };
     this.selectedKlijent = undefined;
     this.klijentTake.emit(klijent);
   }
@@ -62,13 +73,14 @@ export class KlijentComponent implements OnInit {
         this.klijentFormDialogOpened = false;
       },
       save: (klijent: Klijent) => {
-        this.klijentService.createKlijent(klijent)
+        this.klijentService
+          .createKlijent(klijent)
           .pipe(take(1))
           .subscribe((id) => {
             this.klijentFormDialogOpened = false;
-            window.location.reload();
+            this.fetchKlijenti();
           });
-      }
+      },
     };
   }
 
@@ -82,13 +94,14 @@ export class KlijentComponent implements OnInit {
         this.klijentFormDialogOpened = false;
       },
       save: (klijent: Klijent) => {
-        this.klijentService.updateKlijent(klijent.id!, klijent)
+        this.klijentService
+          .updateKlijent(klijent.id!, klijent)
           .pipe(take(1))
           .subscribe(() => {
             this.klijentFormDialogOpened = false;
-            window.location.reload();
+            this.fetchKlijenti();
           });
-      }
+      },
     };
   }
 
@@ -102,13 +115,14 @@ export class KlijentComponent implements OnInit {
         this.confirmationDialogOpened = false;
       },
       confirm: () => {
-        this.klijentService.deleteKlijent(klijent.id!)
+        this.klijentService
+          .deleteKlijent(klijent.id!)
           .pipe(take(1))
           .subscribe(() => {
             this.confirmationDialogOpened = false;
-            window.location.reload();
+            this.fetchKlijenti();
           });
-      }
+      },
     };
   }
 }

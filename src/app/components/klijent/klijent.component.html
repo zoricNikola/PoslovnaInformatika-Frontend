@@ -1,95 +1,113 @@
-<div class="flex flex-col flex-auto justify-center items-center"  *ngIf="klijenti | async as sviKlijenti">
-  <div class="lg:w-3/4 bg-indigo-800 h-full p-4 my-10">
-    <div class="w-full">
-      <confirmation-dialog
-        [opened]="confirmationDialogOpened"
-        [options]="confirmationDialogOptions"
-      ></confirmation-dialog>
-      <klijent-form-dialog
-        [opened]="klijentFormDialogOpened"
-        [options]="klijentFormDialogOptions"
-      ></klijent-form-dialog>
-      <button
-        class="btn btn-green inline-flex items-center mt-5"
-        (click)="onNewKlijentClick()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg> Dodaj
-      </button>
-      <button
-        *ngIf="selectable && selectedKlijent"
-        (click)="onKlijentTake()"
-        class="btn btn-green float-right inline-flex items-center"
+<div *ngIf="klijenti | async as sviKlijenti" class="w-full">
+  <confirmation-dialog
+    [opened]="confirmationDialogOpened"
+    [options]="confirmationDialogOptions"
+  ></confirmation-dialog>
+  <klijent-form-dialog
+    [opened]="klijentFormDialogOpened"
+    [options]="klijentFormDialogOptions"
+  ></klijent-form-dialog>
+  <button
+    class="btn btn-green inline-flex items-center mt-5"
+    (click)="onNewKlijentClick()"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    Dodaj
+  </button>
+  <button
+    *ngIf="selectable && selectedKlijent"
+    (click)="onKlijentTake()"
+    class="btn btn-green float-right inline-flex items-center"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+      />
+    </svg>
+    Take
+  </button>
+  <table
+    class="
+      w-full
+      mt-5
+      table-fixed
+      text-center
+      border-separate
+      table-row-spacing-y-4
+      font-semibold
+    "
+  >
+    <thead>
+      <tr class="bg-red-300 text-indigo-800 shadow-md">
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Ime
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Prezime
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Naziv
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Adresa
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          PIB
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Mesto
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Delatnost
+        </th>
+        <th class="w-16"></th>
+        <th class="w-16"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let klijent of sviKlijenti"
+        class="hover:bg-indigo-600 text-white shadow-md"
+        class="hover:bg-indigo-600 text-white shadow-md"
+        [class.cursor-pointer]="selectable"
+        [ngClass]="
+          selectable && selectedKlijent === klijent
+            ? 'bg-indigo-700'
+            : 'bg-indigo-900'
+        "
+        (click)="selectable && onKlijentSelect(klijent)"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
-          />
-        </svg>
-        Take
-      </button>
-      <table
-        class="
-                w-full
-                mt-5
-                table-fixed
-                text-center
-                border-separate
-                table-row-spacing-y-4
-                font-semibold">
-        <thead>
-        <tr class="bg-red-300 text-indigo-800 shadow-md">
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Ime</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Prezime</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Naziv</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Adresa</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">PIB</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Mesto</th>
-          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">Delatnost</th>
-          <th class="w-16"></th>
-          <th class="w-16"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let klijent of sviKlijenti"
-            class="hover:bg-indigo-600 text-white shadow-md"
-            class="hover:bg-indigo-600 text-white shadow-md"
-            [class.cursor-pointer]="selectable"
-            [ngClass]="
-              selectable && selectedKlijent === klijent
-                ? 'bg-indigo-700'
-                : 'bg-indigo-900'
-            "
-            (click)="selectable && onKlijentSelect(klijent)">
-          <td>{{ klijent.ime }}</td>
-          <td>{{ klijent.prezime }}</td>
-          <td>{{ klijent.naziv }}</td>
-          <td>{{ klijent.adresa }}</td>
-          <td>{{ klijent.pib }}</td>
-          <td>{{ klijent.mesto.nazivMesta }}</td>
-          <td>{{ klijent.delatnost.nazivDelatnosti }}</td><td class="w-16">
-          <button
-            class="btn-sm-yellow"
-            (click)="onEditKlijentClick(klijent)"
-          >
+        <td>{{ klijent.ime }}</td>
+        <td>{{ klijent.prezime }}</td>
+        <td>{{ klijent.naziv }}</td>
+        <td>{{ klijent.adresa }}</td>
+        <td>{{ klijent.pib }}</td>
+        <td>{{ klijent.mesto.nazivMesta }}</td>
+        <td>{{ klijent.delatnost.nazivDelatnosti }}</td>
+        <td class="w-16">
+          <button class="btn-sm-yellow" (click)="onEditKlijentClick(klijent)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6"
@@ -106,32 +124,29 @@
             </svg>
           </button>
         </td>
-          <td class="w-16">
-            <button
-              title="Delete course"
-              class="btn-sm-red"
-              (click)="onKlijentDelete(klijent)"
+        <td class="w-16">
+          <button
+            title="Delete course"
+            class="btn-sm-red"
+            (click)="onKlijentDelete(klijent)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-

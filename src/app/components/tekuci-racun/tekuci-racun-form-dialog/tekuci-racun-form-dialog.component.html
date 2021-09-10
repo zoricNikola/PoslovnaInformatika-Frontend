@@ -1,32 +1,35 @@
 <app-dialog [opened]="opened" [modal]="true">
   <ng-container class="heading">{{
-    options.state === FORM_STATE.ADD
-      ? "Kreirajte novi tekuci racun"
-      : ""
-    }}</ng-container>
+    options.state === FORM_STATE.ADD ? "Kreirajte novi tekuci racun" : ""
+  }}</ng-container>
   <ng-container class="content">
-    <klijent-form-dialog (createdKlijent)="onKlijentCreated($event)"
-    [opened]="klijentFormDialogOpened"
-    [options]="klijentFormDialogOptions">
+    <klijent-form-dialog
+      (createdKlijent)="onKlijentCreated($event)"
+      [opened]="klijentFormDialogOpened"
+      [options]="klijentFormDialogOptions"
+    >
     </klijent-form-dialog>
 
     <form #f="ngForm" (ngSubmit)="f.valid && submit()">
       <div class="flex px-8 py-4 space-x-8 justify-evenly bg-indigo-800">
         <div class="flex flex-col w-80 space-y-4 bg-indigo-800">
-
-
           <app-dialog [opened]="postojeciKlijentIzborOpened" [modal]="true">
             <ng-container class="heading">{{
-              options.state === FORM_STATE.ADD
-                ? "Izaberite klijenta"
-                : ""
-              }}</ng-container>
+              options.state === FORM_STATE.ADD ? "Izaberite klijenta" : ""
+            }}</ng-container>
             <ng-container class="content">
-              <div klijent (itemTake)="onKlijentTaken($event)" [selectable]="true"></div>
+              <div
+                klijent
+                [sifraBanke]="sifraBanke"
+                (itemTake)="onKlijentTaken($event)"
+                [selectable]="true"
+              ></div>
             </ng-container>
             <ng-container class="footer">
               <div class="inline-flex w-full justify-end space-x-2">
-                <a class="btn-sm-red" (click)="onPostojeciKlijentClick()">Cancel</a>
+                <a class="btn-sm-red" (click)="onPostojeciKlijentClick()"
+                  >Cancel</a
+                >
               </div>
             </ng-container>
           </app-dialog>
@@ -36,12 +39,12 @@
               required
               id="brojRacuna"
               name="brojRacuna"
-              type="number"
+              type="text"
               maxlength="18"
               minlength="18"
               placeholder="Broj racuna"
               class="input-underlined"
-              [(ngModel)]="tekuciRacun.id"
+              [(ngModel)]="tekuciRacun.brojRacuna"
               #brojRacuna="ngModel"
             />
             <label for="brojRacuna">Broj racuna</label>
@@ -57,93 +60,79 @@
             </div>
           </div>
 
-          <div
-            class="custom-input-holder w-full"
-            *ngIf="poslovneBanke | async as svePoslovneBanke"
-          >
-            <select
-              required
-              id="poslovnaBanka"
-              name="poslovnBanka"
-              class="input-underlined form-select block"
-              [(ngModel)]="tekuciRacun.poslovnaBanka"
-              #poslovnaBanka="ngModel"
-            >
-              <option
-                *ngIf="tekuciRacun?.poslovnaBanka?.sifraBanke"
-                [ngValue]="tekuciRacun.poslovnaBanka"
-              >
-                {{ tekuciRacun.poslovnaBanka.nazivBanke }}
-              </option>
-              <ng-container *ngFor="let title of svePoslovneBanke">
-                <option
-                  *ngIf="title.sifraBanke !== tekuciRacun?.poslovnaBanka?.sifraBanke"
-                  [ngValue]="title"
-                >
-                  {{ title.nazivBanke }}
-                </option>
-              </ng-container>
-            </select>
-            <label for="poslovnaBanka">Poslovna banka</label>
-            <div
-              *ngIf="poslovnaBanka.touched && poslovnaBanka.invalid"
-              class="input-error-holder"
-            >
-              <div class="flex-col space-y-2">
-                <div *ngIf="poslovnaBanka.errors?.required">
-                  Poslovnu banku je neophodno izabrati
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="custom-input-holder w-full">
             <a
               class="btn btn-green inline-flex items-center mt-5"
-              (click)="onPostojeciKlijentClick()">
+              (click)="onPostojeciKlijentClick()"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor">
+                stroke="currentColor"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg> Izaberite klijenta
+                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Izaberite klijenta
             </a>
           </div>
 
           <div class="custom-input-holder w-full">
             <a
               class="btn btn-green inline-flex items-center mt-5"
-              (click)="onNewKlijentClick()">
+              (click)="onNewKlijentClick()"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor">
+                stroke="currentColor"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg> Kreirajte novog klijenta
+                  d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Kreirajte novog klijenta
             </a>
           </div>
 
           <div class="custom-input-holder w-full mt-5">
-            <button *ngIf="tekuciRacun.klijent.ime !== ''" class="bg-green-600 hover:bg-green-700 text-grey-800 font-bold py-2 px-2 rounded inline-flex items-center">
+            <button
+              *ngIf="tekuciRacun.klijent.ime !== ''"
+              class="
+                bg-green-600
+                hover:bg-green-700
+                text-grey-800
+                font-bold
+                py-2
+                px-2
+                rounded
+                inline-flex
+                items-center
+              "
+            >
               <svg class="svg-icon" viewBox="0 0 20 20">
-                <path d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"></path>
+                <path
+                  d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"
+                ></path>
               </svg>
-              <span class="w-full">{{ tekuciRacun.klijent.ime + " " + tekuciRacun.klijent.prezime }} </span>
+              <span class="w-full"
+                >{{
+                  tekuciRacun.klijent.ime + " " + tekuciRacun.klijent.prezime
+                }}
+              </span>
             </button>
           </div>
-
         </div>
       </div>
       <button hidden></button>
@@ -162,4 +151,3 @@
     </div>
   </ng-container>
 </app-dialog>
-

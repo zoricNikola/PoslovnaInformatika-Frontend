@@ -1,13 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Klijent} from "../../../model/klijent";
-import {Observable, of} from "rxjs";
-import {PoslovnaBanka} from "../../../model/poslovna-banka";
-import {FORM_STATE} from "../../../model/common/form-state";
-import {PoslovnaBankaService} from "../../../service/poslovna-banka.service";
-import {KlijentFormDialogOptions} from "../../klijent/klijent-form-dialog/klijent-form-dialog.component";
-import {TekuciRacun} from "../../../model/tekuci-racun";
-import {take} from "rxjs/operators";
-import {NgForm} from "@angular/forms";
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Klijent } from '../../../model/klijent';
+import { Observable, of } from 'rxjs';
+import { PoslovnaBanka } from '../../../model/poslovna-banka';
+import { FORM_STATE } from '../../../model/common/form-state';
+import { PoslovnaBankaService } from '../../../service/poslovna-banka.service';
+import { KlijentFormDialogOptions } from '../../klijent/klijent-form-dialog/klijent-form-dialog.component';
+import { TekuciRacun } from '../../../model/tekuci-racun';
+import { take } from 'rxjs/operators';
+import { NgForm } from '@angular/forms';
 
 export interface TekuciRacunFormDialogOptions {
   state: FORM_STATE;
@@ -18,7 +18,7 @@ export interface TekuciRacunFormDialogOptions {
 @Component({
   selector: 'app-tekuci-racun-form-dialog',
   templateUrl: './tekuci-racun-form-dialog.component.html',
-  styleUrls: ['./tekuci-racun-form-dialog.component.css']
+  styleUrls: ['./tekuci-racun-form-dialog.component.css'],
 })
 export class TekuciRacunFormDialogComponent implements OnInit {
   @Input('selectedKlijent') selectedKlijent: Klijent | undefined = undefined;
@@ -26,20 +26,21 @@ export class TekuciRacunFormDialogComponent implements OnInit {
   @Input('selectable') selectable = true;
   @Input('options') options!: TekuciRacunFormDialogOptions;
   @Input('opened') opened = false;
+  @Input('sifraBanke') sifraBanke!: number;
   @ViewChild('f') form!: NgForm;
 
-  poslovneBanke: Observable<PoslovnaBanka []> = of();
+  poslovneBanke: Observable<PoslovnaBanka[]> = of();
 
   klijentFormDialogOpened: boolean = false;
   klijentFormDialogOptions: KlijentFormDialogOptions = {
     state: FORM_STATE.ADD,
     klijentForEdit: undefined,
     cancel: () => {},
-    save: (klijent: Klijent) => {}
+    save: (klijent: Klijent) => {},
   };
 
   tekuciRacun: TekuciRacun = {
-    id: '',
+    brojRacuna: '',
     poslovnaBanka: {
       nazivBanke: '',
       obracunskiRacun: {
@@ -47,7 +48,7 @@ export class TekuciRacunFormDialogComponent implements OnInit {
       },
       swiftKod: '',
     },
-    klijent:{
+    klijent: {
       ime: '',
       prezime: '',
       naziv: '',
@@ -59,62 +60,69 @@ export class TekuciRacunFormDialogComponent implements OnInit {
         nazivMesta: '',
       },
       delatnost: {
-        id:0,
+        id: 0,
         sifraDelatnosti: 0,
         nazivDelatnosti: '',
-      }
-    }
+      },
+    },
   };
 
   postojeciKlijentIzborOpened = false;
 
-  constructor(
-    private poslovnaBankaService: PoslovnaBankaService
-  ) { }
+  constructor() {}
 
-  ngOnInit(): void {
-    this.poslovneBanke = this.poslovnaBankaService.getPoslovneBanke();
-  }
+  ngOnInit(): void {}
 
   get FORM_STATE() {
     return FORM_STATE;
   }
 
-  submit(){
+  submit() {
     this.form.form.markAllAsTouched();
 
-    if(this.form.valid){
+    if (this.form.valid) {
       (document.activeElement as HTMLElement).blur();
       if (this.klijentIzabrani) {
         this.tekuciRacun.klijent = this.klijentIzabrani;
       }
-      if(this.selectedKlijent){
+      if (this.selectedKlijent) {
         this.tekuciRacun.klijent = this.selectedKlijent;
       }
-      this.options.save(this.tekuciRacun);
+      this.options.save({
+        ...this.tekuciRacun,
+        poslovnaBanka: {
+          sifraBanke: this.sifraBanke,
+          nazivBanke: '',
+          obracunskiRacun: {
+            brojObracunskogRacuna: '',
+          },
+          swiftKod: '',
+        },
+        klijent: { ...this.tekuciRacun.klijent },
+      });
     }
   }
 
-  onPostojeciKlijentClick(){
+  onPostojeciKlijentClick() {
     this.postojeciKlijentIzborOpened = !this.postojeciKlijentIzborOpened;
     console.log(this.selectedKlijent);
   }
 
-  onKlijentTaken(klijent: Klijent): void{
+  onKlijentTaken(klijent: Klijent): void {
     this.selectedKlijent = klijent;
-    if(this.selectedKlijent){
+    if (this.selectedKlijent) {
       this.tekuciRacun.klijent = this.selectedKlijent;
     }
   }
 
-  onKlijentCreated(klijent: Klijent): void{
+  onKlijentCreated(klijent: Klijent): void {
     this.klijentIzabrani = klijent;
-    if(this.klijentIzabrani){
+    if (this.klijentIzabrani) {
       this.tekuciRacun.klijent = this.klijentIzabrani;
     }
   }
 
-  onNewKlijentClick(){
+  onNewKlijentClick() {
     this.klijentFormDialogOpened = true;
 
     this.klijentFormDialogOptions = {
@@ -126,7 +134,7 @@ export class TekuciRacunFormDialogComponent implements OnInit {
       save: (klijent: Klijent) => {
         this.tekuciRacun.klijent = klijent;
         this.klijentFormDialogOpened = false;
-      }
+      },
     };
   }
 }

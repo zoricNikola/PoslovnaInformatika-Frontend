@@ -1,13 +1,22 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {FORM_STATE} from "../../../model/common/form-state";
-import {Klijent} from "../../../model/klijent";
-import {NgForm} from "@angular/forms";
-import {Observable, of} from "rxjs";
-import {Delatnost} from "../../../model/delatnost";
-import {Mesto} from "../../../model/mesto";
-import {MestoService} from "../../../service/mesto.service";
-import {DelatnostService} from "../../../service/delatnost.service";
-import {map} from "rxjs/operators";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { FORM_STATE } from '../../../model/common/form-state';
+import { Klijent } from '../../../model/klijent';
+import { NgForm } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { Delatnost } from '../../../model/delatnost';
+import { Mesto } from '../../../model/mesto';
+import { MestoService } from '../../../service/mesto.service';
+import { DelatnostService } from '../../../service/delatnost.service';
+import { map } from 'rxjs/operators';
 
 export interface KlijentFormDialogOptions {
   state: FORM_STATE;
@@ -19,12 +28,13 @@ export interface KlijentFormDialogOptions {
 @Component({
   selector: 'klijent-form-dialog',
   templateUrl: './klijent-form-dialog.component.html',
-  styleUrls: ['./klijent-form-dialog.component.css']
+  styleUrls: ['./klijent-form-dialog.component.css'],
 })
 export class KlijentFormDialogComponent implements OnInit, OnChanges {
   @Input('opened') opened = false;
   @Input('options') options!: KlijentFormDialogOptions;
-  @Output('createdKlijent') createdKlijent: EventEmitter<Klijent> = new EventEmitter<Klijent>();
+  @Output('createdKlijent') createdKlijent: EventEmitter<Klijent> =
+    new EventEmitter<Klijent>();
 
   @ViewChild('f') form!: NgForm;
 
@@ -43,18 +53,18 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
       id: 0,
       sifraDelatnosti: 0,
       nazivDelatnosti: '',
-    }
-  }
+    },
+  };
 
   originalKlijentName: string | undefined;
 
-  delatnosti: Observable<Delatnost []> = of();
-  mesta: Observable<Mesto []> = of();
+  delatnosti: Observable<Delatnost[]> = of();
+  mesta: Observable<Mesto[]> = of();
 
   constructor(
     private mestoService: MestoService,
     private delatnostiService: DelatnostService
-  ) { }
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (
@@ -62,7 +72,7 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
       this.options.klijentForEdit &&
       this.options.state === FORM_STATE.EDIT
     ) {
-      this.klijent = {...this.options.klijentForEdit};
+      this.klijent = { ...this.options.klijentForEdit };
       this.originalKlijentName = this.klijent.ime + ' ' + this.klijent.prezime;
     }
     if (
@@ -84,13 +94,13 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
             nazivMesta: '',
           },
           delatnost: {
-            id:0,
+            id: 0,
             sifraDelatnosti: 0,
             nazivDelatnosti: '',
-          }
+          },
         };
         this.originalKlijentName = '';
-      }, 3000)
+      }, 300);
     }
   }
 
@@ -103,17 +113,16 @@ export class KlijentFormDialogComponent implements OnInit, OnChanges {
     return FORM_STATE;
   }
 
-  submit(){
+  submit() {
     this.form.form.markAllAsTouched();
 
-    if(this.form.valid){
+    if (this.form.valid) {
       (document.activeElement as HTMLElement).blur();
       this.options.save({
         ...this.klijent,
-        mesto: {...this.klijent.mesto},
-        delatnost: {...this.klijent.delatnost}
+        mesto: { ...this.klijent.mesto },
+        delatnost: { ...this.klijent.delatnost },
       });
     }
   }
-
 }
