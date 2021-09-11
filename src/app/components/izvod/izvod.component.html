@@ -1,0 +1,70 @@
+<form #f="ngForm">
+  <div class="flex flex-row space-x-2 w-full">
+    <div class="flex flex-row space-x-2">
+      <label class="text-xl">Od</label>
+      <input
+        [(ngModel)]="startDate"
+        name="startDate"
+        type="date"
+        placeholder="Start date"
+        class="input-underlined text-center mt-0"
+      />
+    </div>
+    <div class="flex flex-row space-x-2">
+      <label class="text-xl">Do</label>
+      <input
+        [(ngModel)]="endDate"
+        name="startDate"
+        type="date"
+        placeholder="Start date"
+        class="input-underlined text-center mt-0"
+      />
+    </div>
+    <button
+      [disabled]="!startDate || !endDate"
+      class="btn btn-green disabled:opacity-50"
+      [class.cursor-not-allowed]="!startDate || !endDate"
+      (click)="generate()"
+    >
+      Generiši
+    </button>
+  </div>
+  <div *ngIf="izvod | async as izvod">
+    <table
+      class="
+        w-full
+        mt-5
+        table-fixed
+        text-center
+        border-separate
+        table-row-spacing-y-4
+        font-semibold
+      "
+    >
+      <thead>
+        <tr class="bg-red-300 text-indigo-800 shadow-md">
+          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+            Datum
+          </th>
+          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+            Vrsta poruke
+          </th>
+          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+            Ukupan iznos
+          </th>
+          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+            Šifra valute
+          </th>
+          <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+            Datum valute
+          </th>
+        </tr>
+      </thead>
+    </table>
+    <div
+      *ngFor="let poruka of izvod.porukeIzvoda"
+      poruka-izvoda
+      [poruka]="poruka"
+    ></div>
+  </div>
+</form>

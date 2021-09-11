@@ -17,6 +17,8 @@ import {KlijentFormDialogComponent} from "./components/klijent/klijent-form-dial
 import { TekuciRacunComponent } from './components/tekuci-racun/tekuci-racun.component';
 import { TekuciRacunFormDialogComponent } from './components/tekuci-racun/tekuci-racun-form-dialog/tekuci-racun-form-dialog.component';
 import { PoslovnaBankaComponent } from './components/poslovna-banka/poslovna-banka.component';
+import { IzvodComponent } from './components/izvod/izvod.component';
+import { PorukaComponent } from './components/izvod/poruka/poruka.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { PoslovnaBankaComponent } from './components/poslovna-banka/poslovna-ban
     KlijentFormDialogComponent,
     TekuciRacunComponent,
     TekuciRacunFormDialogComponent,
-    PoslovnaBankaComponent
+    PoslovnaBankaComponent,
+    IzvodComponent,
+    PorukaComponent
   ],
   imports: [
     BrowserModule,

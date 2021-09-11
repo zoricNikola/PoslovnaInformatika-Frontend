@@ -1,0 +1,107 @@
+<table
+  class="
+    w-full
+    mt-5
+    table-fixed
+    text-center
+    border-separate
+    table-row-spacing-y-4
+    font-semibold
+  "
+>
+  <tbody>
+    <tr class="bg-indigo-700 hover:bg-indigo-600 text-white shadow-md">
+      <td>{{ poruka.datum }}</td>
+      <td>{{ poruka.vrstaPoruke }}</td>
+      <td>{{ poruka.ukupanIznos }}</td>
+      <td>{{ poruka.sifraValute }}</td>
+      <td>{{ poruka.datumValute }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button
+  title="Prikaži naloge"
+  (click)="showNalozi = !showNalozi"
+  class="btn btn-indigo inline-flex items-center w-full mt-2 rounded-md"
+>
+  <img *ngIf="!showNalozi" class="h-6 w-6" src="assets/arrow-down.svg" />
+  <img *ngIf="showNalozi" class="h-6 w-6" src="assets/arrow-up.svg" />
+  Nalozi
+</button>
+<div accordion [opened]="showNalozi">
+  <table
+    class="
+      w-full
+      mt-5
+      text-center
+      border-separate
+      table-row-spacing-y-4
+      font-semibold
+    "
+  >
+    <thead>
+      <tr class="bg-red-300 text-indigo-800 shadow-md">
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Dužnik
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Poverilac
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Račun dužnika
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Račun poverioca
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Svrha plaćanja
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Iznos
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Datum
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Hitno
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Poziv na broj zaduženja
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Poziv na broj odobrenja
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Model zaduženja
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Model odobrenja
+        </th>
+        <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+          Šifra valute
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let nalog of poruka.nalozi"
+        class="bg-indigo-700 hover:bg-indigo-600 text-white shadow-md"
+      >
+        <td>{{ nalog.duznik }}</td>
+        <td>{{ nalog.poverilac }}</td>
+        <td>{{ nalog.racunDuznika }}</td>
+        <td>{{ nalog.racunPoverioca }}</td>
+        <td>{{ nalog.svrhaPlacanja }}</td>
+        <td>{{ nalog.iznos }}</td>
+        <td>{{ nalog.datum }}</td>
+        <td>{{ nalog.hitno ? "Da" : "Ne" }}</td>
+        <td>{{ nalog.pozivNaBrojZaduzenja }}</td>
+        <td>{{ nalog.pozivNaBrojOdobrenja }}</td>
+        <td>{{ nalog.modelZaduzenja }}</td>
+        <td>{{ nalog.modelOdobrenja }}</td>
+        <td>{{ nalog.sifraValute }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -20,7 +20,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["active", "disabled"],
+      opacity: ["disabled"],
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),

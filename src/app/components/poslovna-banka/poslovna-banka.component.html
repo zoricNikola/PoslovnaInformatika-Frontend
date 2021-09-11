@@ -52,6 +52,13 @@
           <img *ngIf="showIzvod" class="h-6 w-6" src="assets/arrow-up.svg" />
           Izvod
         </button>
+        <div accordion [opened]="showIzvod">
+          <div
+            izvod
+            [opened]="showIzvod"
+            [sifraBanke]="banka.sifraBanke!"
+          ></div>
+        </div>
       </div>
     </div>
   </div>

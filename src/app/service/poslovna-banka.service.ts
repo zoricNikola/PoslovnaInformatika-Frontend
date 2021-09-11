@@ -6,8 +6,9 @@ import { environment } from 'src/environments/environment';
 import { PoslovnaBanka } from '../model/poslovna-banka';
 import { BaseService } from './base.service';
 import { Klijent } from './../model/klijent';
-import { catchError } from 'rxjs/operators';
 import { TekuciRacun } from './../model/tekuci-racun';
+import { IzvodRacuna } from '../model/izvod-racuna';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,27 @@ export class PoslovnaBankaService extends BaseService {
       .pipe(
         map((responseBody) => {
           return responseBody as TekuciRacun[];
+        })
+      );
+  }
+
+  getIzvodPoslovneBanke(
+    sifraBanke: number,
+    startDate: Date,
+    endDate: Date
+  ): Observable<IzvodRacuna> {
+    let params: any = {
+      startDatum: startDate,
+      endDatum: endDate,
+    };
+
+    return this.http
+      .get(`${this.url}/${sifraBanke}/izvod`, { params, observe: 'response' })
+      .pipe(map((response) => response.body))
+      .pipe(catchError(this.handleError))
+      .pipe(
+        map((responseBody) => {
+          return responseBody as IzvodRacuna;
         })
       );
   }
