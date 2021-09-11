@@ -19,6 +19,7 @@ import { TekuciRacunFormDialogComponent } from './components/tekuci-racun/tekuci
 import { PoslovnaBankaComponent } from './components/poslovna-banka/poslovna-banka.component';
 import { IzvodComponent } from './components/izvod/izvod.component';
 import { PorukaComponent } from './components/izvod/poruka/poruka.component';
+import { StanjaComponent } from './components/stanja/stanja.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PorukaComponent } from './components/izvod/poruka/poruka.component';
     TekuciRacunFormDialogComponent,
     PoslovnaBankaComponent,
     IzvodComponent,
-    PorukaComponent
+    PorukaComponent,
+    StanjaComponent
   ],
   imports: [
     BrowserModule,

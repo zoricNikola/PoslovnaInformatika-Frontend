@@ -1,5 +1,5 @@
 <nav>
-    <div
+  <div
     class="
       container
       px-6
@@ -9,48 +9,37 @@
       items-center
       lg:items-stretch
       mx-auto
-    ">
+    "
+  >
     <div class="mr-10 flex items-center">
-        <img
-          class="object-contain h-14 rounded-full"
-          src="./../../assets/central_bank.png"
-          aria-label="Home"
-          id="logo"
-        />
-        <h3
-          class="
-            text-base text-white
-            font-bold
-            tracking-normal
-            leading-tight
-            ml-3
-            hidden
-            lg:block
-          "
-        >
-          {{ appName }}
-        </h3>
+      <img
+        class="object-contain h-14 rounded-full"
+        src="./../../assets/central_bank.png"
+        aria-label="Home"
+        id="logo"
+      />
+      <h3
+        class="
+          text-base text-white
+          font-bold
+          tracking-normal
+          leading-tight
+          ml-3
+          hidden
+          lg:block
+        "
+      >
+        {{ appName }}
+      </h3>
     </div>
 
     <ul class="flex items-center h-full">
-      <a
-      [routerLink]=""
-      class="router-link">
-      <span class="mr-4"></span>Izvestaji
+      <a routerLink="/poslovne-banke" class="router-link">
+        <span class="mr-4"></span>Banke
       </a>
-
-      <a
-      routerLink="/klijent"
-      [ngClass]="{ 'active-router-link': isActive('/klijent') }"
-      class="router-link">
-      <span class="mr-4"></span>Klijenti
-      </a>
-
-      <a
-        routerLink="/tekuci-racun"
-        class="router-link">
-        <span class="mr-4"></span>Tekuci racuni
+      <a routerLink="/stanja" class="router-link">
+        <span class="mr-4"></span>Stanja
       </a>
     </ul>
-</div>
+  </div>
 </nav>

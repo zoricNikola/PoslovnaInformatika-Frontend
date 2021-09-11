@@ -1,0 +1,66 @@
+<div class="flex flex-col flex-auto justify-center items-center">
+  <div class="lg:w-3/4 bg-indigo-800 h-full p-4 my-10">
+    <div class="flex flex-row mb-4 space-x-2 text-4xl font-bold justify-center">
+      <h1>Stanje obračunskih računa za</h1>
+      <div>
+        <input
+          [ngModel]="date"
+          (ngModelChange)="fetchStanja($event)"
+          name="startDate"
+          type="date"
+          placeholder="Start date"
+          class="input-underlined text-center mt-0"
+        />
+      </div>
+    </div>
+    <div *ngIf="stanja | async as stanja">
+      <table
+        class="
+          w-full
+          mt-5
+          table-fixed
+          text-center
+          border-separate
+          table-row-spacing-y-4
+          font-semibold
+        "
+      >
+        <thead>
+          <tr class="bg-red-300 text-indigo-800 shadow-md">
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Šifra banke
+            </th>
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Naziv banke
+            </th>
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Prethodno stanje
+            </th>
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Promet na teret
+            </th>
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Promet u korist
+            </th>
+            <th class="hover:bg-red-400 active:bg-orange-400 cursor-pointer">
+              Novo stanje
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let stanje of stanja"
+            class="bg-indigo-700 hover:bg-indigo-600 text-white shadow-md"
+          >
+            <td>{{ stanje.poslovnaBanka.sifraBanke }}</td>
+            <td>{{ stanje.poslovnaBanka.nazivBanke }}</td>
+            <td>{{ stanje.dnevnoStanje.prethodnoStanje }}</td>
+            <td>{{ stanje.dnevnoStanje.prometNaTeret }}</td>
+            <td>{{ stanje.dnevnoStanje.prometUKorist }}</td>
+            <td>{{ stanje.dnevnoStanje.novoStanje }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
